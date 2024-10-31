@@ -1,0 +1,63 @@
+<script>
+//example 1 
+/*
+Map benefits:
+Fast lookups: Map provides very fast lookups using the get(key) method, which is essential for efficiently retrieving user data.
+Unique keys: The has(key) method makes it easy to ensure that we don't add duplicate users with the same ID.
+Flexibility: We can store any type of user object as the value in the Map, giving us flexibility in how we represent our user data.
+Efficient Key Management:  Compared to plain JavaScript objects, Map provides more efficient ways to work with keys. You can easily check if a key exists (has(key)), iterate over keys, and get the size of the Map.
+Order Preservation:  While not critical in this specific example, Map preserves the order of insertion of its elements. This can be useful in some situations where the order of users matters.
+
+Alternatives:
+Plain JavaScript Object: Could use an object with user IDs as keys, you'd have to manually check for duplicate IDs and implement your own logic for key management. Objects don't inherently prevent duplicate keys.
+Array:  An array of user objects would require you to iterate through the entire array to find a specific user, which can be slow for large numbers of users. You'd also need to implement your own logic for preventing duplicates.
+
+*/
+
+    // use the user's ID as the key and the user object as the value
+const userStore = new Map();
+
+//checks if a user with the same ID already exists. If not, it adds the user to the Map.
+function addUser(user) {
+  if (userStore.has(user.id)) {
+    console.log(`User with ID ${user.id} already exists.`);
+    return false; 
+  }
+
+  userStore.set(user.id, user);
+  console.log(`User ${user.name} added.`);
+  return true;
+}
+
+//retrieves a user from the userStore based on their ID.
+function getUser(userId) {
+  if (userStore.has(userId)) {
+    return userStore.get(userId);
+  } else {
+    console.log(`User with ID ${userId} not found.`);
+    return null;
+  }
+}
+
+// Example usage
+addUser({ id: 1, name: "Alice", email: "alice@example.com" });
+addUser({ id: 2, name: "Bob", email: "bob@example.com" });
+addUser({ id: 1, name: "Charlie", email: "charlie@example.com" }); // This will fail
+
+const user = getUser(2);
+if (user) {
+  console.log(`Found user: ${user.name}`); 
+}
+
+//example 2: counting occurances
+
+const wordCounts = new Map();
+const words = ["apple", "banana", "apple", "orange", "banana", "apple"];
+
+for (const word of words) {
+  const count = wordCounts.get(word) || 0;
+  wordCounts.set(word, count + 1);
+}
+
+console.log(wordCounts); // Output: Map(3) { 'apple' => 3, 'banana' => 2, 'orange' => 1 }
+</script>

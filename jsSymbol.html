@@ -1,0 +1,60 @@
+<script>
+//Symbol examples
+/*
+In JavaScript, object keys are typically strings. If you're working on a large project or using third-party libraries, there's a chance of naming collisions.  Two different parts of the code might accidentally use the same property name on an object, leading to unexpected behavior.
+Symbols allow you to create "hidden" properties.  They don't show up when you iterate over an object's properties using common methods.
+*/
+
+//example 1
+const hiddenProperty = Symbol('metadata');
+const myObject = {
+  name: 'Public Property',
+  [hiddenProperty]: 'This is hidden!' 
+};
+
+for (let key in myObject) {
+  console.log(key); // Only "name" will be logged
+}
+
+/*
+Object.getOwnPropertySymbols(obj): This method retrieves an array of all Symbol properties found directly on the object (obj). In our case, each object (obj1 and obj2) has one Symbol property, which is the one we created using idSymbol.
+
+obj1Symbols[0] and obj2Symbols[0]: Since we know there's only one Symbol property in each object, we access the first element ([0]) of the arrays returned by Object.getOwnPropertySymbols(). This gives us the actual idSymbol for each object.
+
+obj1[obj1Symbols[0]] and obj2[obj2Symbols[0]]:  We use the retrieved idSymbol to access the corresponding Symbol ID value within each object. This allows us to log the actual unique Symbol IDs to the console.
+
+Symbols are their own unique primitive type. They are not numbers, strings, or any other data type. Think of them as special, unique tokens created specifically to be identifiers.
+*/
+
+
+//example 2
+/*
+const idSymbol = Symbol('id');
+        
+        function createUniqueObject() {
+         
+            return {
+            [idSymbol]: Symbol(), // Generate a unique Symbol ID for each object
+            name: 'New Object'
+            
+          };
+          
+        }
+  
+        const obj1 = createUniqueObject();
+        const obj2 = createUniqueObject();
+        
+        // Log the objects to the console
+        console.log(obj1, obj2);
+        
+        // Get the Symbol properties of the objects
+        const obj1Symbols = Object.getOwnPropertySymbols(obj1);
+        const obj2Symbols = Object.getOwnPropertySymbols(obj2);
+        
+        // Log the Symbol IDs to the console
+        console.log("obj1 Symbol ID:", obj1[obj1Symbols[0]]);
+        console.log("obj2 Symbol ID:", obj2[obj2Symbols[0]]);
+        
+        console.log(obj1[idSymbol] === obj2[idSymbol]); // Output: false (IDs are unique)
+        */
+</script>

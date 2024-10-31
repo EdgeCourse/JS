@@ -1,0 +1,62 @@
+<script>
+/*
+Uses Map and Set
+
+We want to efficiently manage tags for products using a combination of Map and Set.  
+This is like an e-commerce site where each product can have multiple tags (e.g., "electronics," "laptop," "gaming," "sale"). Store these tags in a way that avoids duplicates and allows for easy retrieval.
+
+productTags (Map): This Map is our central storage. 
+It holds key-value pairs where:
+
+Key: The product ID (e.g., 1, 2, 3)
+Value: A Set of tags associated with that product
+
+addTagsToProduct(productId, tags) takes a product ID and an array of tags as input.
+It first checks if the productTags map already has an entry for the given productId. If not, it creates a new Set and adds it to the map with the productId as the key.
+It then retrieves the Set associated with the productId and adds each tag from the tags array to the Set. Since a Set only allows unique values, any duplicate tags are automatically ignored.
+
+getTagsForProduct(productId) takes a product ID as input.
+It checks if the productTags map has an entry for the given productId.
+If the product is found, it returns the Set of tags associated with it.
+If the product is not found, it returns an empty Set.
+
+Map for organization: The Map (productTags) acts as our main organizer. It allows us to efficiently store and retrieve tags for each product using the product ID as the key. This gives us a structured way to manage tags across multiple products.
+
+Set for uniqueness:  For each product, we need to ensure that there are no duplicate tags. This is where Set shines! By using a Set to store the tags for each product, we automatically get uniqueness enforcement.  The Set handles preventing duplicates, so we don't have to write extra code to check for and remove them.
+
+Combined efficiency:  Together, Map and Set provide a very efficient solution.  Map gives us fast lookups for products, and Set ensures that the tag collections for each product remain clean and optimized.
+*/
+
+const productTags = new Map(); 
+
+function addTagsToProduct(productId, tags) {
+  if (!productTags.has(productId)) {
+    productTags.set(productId, new Set());
+  }
+
+  const productTagSet = productTags.get(productId);
+  for (const tag of tags) {
+    productTagSet.add(tag); 
+  }
+}
+
+function getTagsForProduct(productId) {
+  if (productTags.has(productId)) {
+    return productTags.get(productId);
+  } else {
+    return new Set(); // Return an empty set if no tags are found
+  }
+}
+
+// Example usage
+addTagsToProduct(1, ["electronics", "laptop", "gaming"]);
+addTagsToProduct(2, ["clothing", "shoes", "men's"]);
+addTagsToProduct(1, ["new", "sale"]); 
+
+const product1Tags = getTagsForProduct(1);
+console.log(product1Tags); // Output: Set(5) { 'electronics', 'laptop', 'gaming', 'new', 'sale' }
+
+const product3Tags = getTagsForProduct(3); 
+console.log(product3Tags); // Output: Set(0) {}
+
+</script>
